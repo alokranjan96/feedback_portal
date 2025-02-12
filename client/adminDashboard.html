@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            font-family: 'Roboto', sans-serif;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 12px;
+            max-width: 1200px;
+            margin: auto;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        h1 {
+            text-align: center;
+            color: #6a11cb;
+            margin-bottom: 20px;
+        }
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #ff4d4d;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .logout-btn:hover {
+            background: #cc0000;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            font-size: 14px;
+        }
+        th {
+            background-color: #6a11cb;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        @media (max-width: 768px) {
+            table {
+                font-size: 12px;
+            }
+            th, td {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Feedback Responses</h1>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+    <table>
+        <thead>
+        <tr>
+            <th>Teacher</th>
+            <th>Subject</th>
+            <th>Teaching Skills</th>
+            <th>Approachability</th>
+            <th>Explanation</th>
+            <th>Engagement</th>
+            <th>Feedback Quality</th>
+            <th>Time Management</th>
+            <th>Participation</th>
+            <th>Comments</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody id="feedbackList">
+        <!-- Data will be populated here -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    async function fetchFeedback() {
+        try {
+            const token = localStorage.getItem('adminToken');
+            if (!token) {
+                window.location.href = '/adminLogin.html';
+                return;
+            }
+
+            const response = await fetch('/api/feedback', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (!response.ok) throw new Error('Failed to fetch');
+
+            const feedback = await response.json();
+            const tbody = document.getElementById('feedbackList');
+            tbody.innerHTML = '';
+
+            feedback.forEach(item => {
+                const row = `
+                    <tr>
+                        <td>${item.teacherName}</td>
+                        <td>${item.subject}</td>
+                        <td>${item.teachingSkills}</td>
+                        <td>${item.approachability}</td>
+                        <td>${item.explanation}</td>
+                        <td>${item.engagement}</td>
+                        <td>${item.feedbackQuality}</td>
+                        <td>${item.timeManagement}</td>
+                        <td>${item.participation}</td>
+                        <td>${item.comments || 'N/A'}</td>
+                        <td>${new Date(item.createdAt).toLocaleDateString()}</td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to load feedback data');
+        }
+    }
+
+    function logout() {
+        localStorage.removeItem('adminToken');
+        window.location.href = '/index.html';
+    }
+
+    document.addEventListener('DOMContentLoaded', fetchFeedback);
+</script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Feedback Hub - Teacher Feedback Portal</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Additional styles for the login page */
+        body {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Roboto', sans-serif;
+            color: #fff;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 400px;
+            position: relative; /* Added for positioning the logout button */
+        }
+
+        h1 {
+            text-align: center;
+            color: #6a11cb;
+            font-size: 32px; /* Increased font size for the title */
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #4a90e2; /* Title color */
+            font-size: 24px; /* Title font size */
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 2px solid #6a11cb;
+            background-color: #f1f8ff;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            border-color: #2575fc;
+            outline: none;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            padding: 15px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #5a0db1, #1e5bbf);
+        }
+
+        #loginMessage {
+            text-align: center;
+            color: red;
+            margin-top: 10px;
+        }
+
+        #registerPrompt {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Welcome to Feedback Hub</h2> <!-- Added title -->
+    <form id="loginForm">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" required>
+        </div>
+        <button type="submit" class="submit-btn">Login</button>
+    </form>
+    <div id="loginMessage"></div>
+    <div id="registerPrompt">
+        <p><span style="color: #800020; font-weight: bold;">Don't have user account?</span>
+            <a href="#" id="registerLink" style="color: #000000; text-decoration: underline;">Register here</a>
+        </p>
+    </div>
+
+    <!-- Add this section above the register prompt -->
+    <div id="adminPrompt" style="text-align: center; margin-top: 15px;">
+        <p><span style="color: #800020; font-weight: bold;">Admin? </span>
+            <a href="adminLogin.html" style="color: #000000; text-decoration: underline;">Login here</a>
+        </p>
+    </div>
+</div>
+
+<script src="login.js"></script>
+<script>
+    // Redirect to registration page when the link is clicked
+    document.getElementById('registerLink').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent default anchor behavior
+        window.location.href = "register.html"; // Redirect to the registration page
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Feedback Portal</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <button id="logoutButton">Logout</button> <!-- Logout Button -->
+    <h1>Share Your Feedback – Help Improve Teaching Excellence!</h1>
+    <form id="feedbackForm">
+        <div class="dropdown-container">
+            <!-- Teacher Name Dropdown -->
+            <div class="dropdown">
+                <label for="teacherName">Teacher's Name:</label>
+                <select id="teacherName" required>
+                    <option value="">Select a Teacher</option>
+                    <option value="Ashutosh Hota">Ashutosh Hota</option>
+                    <option value="Harihar Pradhan">Harihar Pradhan</option>
+                    <option value="Bidyadhar Sahoo">Bidyadhar Sahoo</option>
+                    <option value="Hrusikesh Mohanty">Hrusikesh Mohanty</option>
+                    <option value="Saroj Purohit">Saroj Purohit</option>
+                </select>
+            </div>
+
+            <!-- Subject Dropdown -->
+            <div class="dropdown">
+                <label for="subject">Subject:</label>
+                <select id="subject" required>
+                    <option value="">Select a Subject</option>
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="Science">Science</option>
+                    <option value="English">English</option>
+                    <option value="History">History</option>
+                    <option value="Geography">Geography</option>
+                </select>
+            </div>
+        </div>
+
+        <h3>Feedback Questions:</h3>
+
+        <div class="question">
+            <label>1. How would you rate the teacher's teaching skills?</label>
+            <div class="option-container">
+                <input type="radio" name="teachingSkills" value="Excellent" required> Excellent
+                <input type="radio" name="teachingSkills" value="Good"> Good
+                <input type="radio" name="teachingSkills" value="Average"> Average
+                <input type="radio" name="teachingSkills" value="Poor"> Poor
+            </div>
+        </div>
+
+        <div class="question">
+            <label>2. How approachable is the teacher?</label>
+            <div class="option-container">
+                <input type="radio" name="approachability" value="Very Approachable" required> Very Approachable
+                <input type="radio" name="approachability" value="Somewhat Approachable"> Somewhat Approachable
+                <input type="radio" name="approachability" value="Not Approachable"> Not Approachable
+            </div>
+        </div>
+
+        <div class="question">
+            <label>3. How effective are the teacher's explanations?</label>
+            <div class="option-container">
+                <input type="radio" name="explanation" value="Very Effective" required> Very Effective
+                <input type="radio" name="explanation" value="Effective"> Effective
+                <input type="radio" name="explanation" value="Average"> Average
+                <input type="radio" name="explanation" value="Not Effective"> Not Effective
+            </div>
+        </div>
+
+        <div class="question">
+            <label>4. How engaging are the teacher's lessons?</label>
+            <div class="option-container">
+                <input type="radio" name="engagement" value="Very Engaging" required> Very Engaging
+                <input type="radio" name="engagement" value="Engaging"> Engaging
+                <input type="radio" name="engagement" value="Somewhat Engaging"> Somewhat Engaging
+                <input type="radio" name="engagement" value="Not Engaging"> Not Engaging
+            </div>
+        </div>
+
+        <div class="question">
+            <label>5. Does the teacher provide useful feedback?</label>
+            <div class="option-container">
+                <input type="radio" name="feedbackQuality" value="Always" required> Always
+                <input type="radio" name="feedbackQuality" value="Sometimes"> Sometimes
+                <input type="radio" name="feedbackQuality" value="Rarely"> Rarely
+                <input type="radio" name="feedbackQuality" value="Never"> Never
+            </div>
+        </div>
+
+        <div class="question">
+            <label>6. How would you rate the teacher’s time management?</label>
+            <div class="option-container">
+                <input type="radio" name="timeManagement" value="Excellent" required> Excellent
+                <input type="radio" name="timeManagement" value="Good"> Good
+                <input type="radio" name="timeManagement" value="Average"> Average
+                <input type="radio" name="timeManagement" value="Poor"> Poor
+            </div>
+        </div>
+
+        <div class="question">
+            <label>7. Does the teacher encourage student participation?</label>
+            <div class="option-container">
+                <input type="radio" name="participation" value="Always" required> Always
+                <input type="radio" name="participation" value="Sometimes"> Sometimes
+                <input type="radio" name="participation" value="Rarely"> Rarely
+                <input type="radio" name="participation" value="Never"> Never
+            </div>
+        </div>
+
+        <div class="question">
+            <label>8. Any additional comments or suggestions?</label>
+            <textarea id="comments" rows="4" placeholder="Your comments here..."></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">Submit Feedback</button>
+    </form>
+    <div id="responseMessage"></div>
+</div>
+
+<script src="script.js"></script>
+<script>
+    document.getElementById('logoutButton').addEventListener('click', function() {
+        localStorage.removeItem('loggedIn');
+        window.location.href = "index.html";
+    });
+</script>
+</body>
+</html>

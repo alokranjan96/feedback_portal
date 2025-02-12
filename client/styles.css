@@ -1,0 +1,165 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    padding: 20px;
+}
+
+/* Main Container */
+.container {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 700px;
+    position: relative;
+}
+
+/* Logout Button (Fixed at Top-Right of Page) */
+#logoutButton {
+    position: fixed;
+    top: 15px;
+    right: 20px;
+    background-color: #ff4b5c;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+    z-index: 1000;
+}
+
+#logoutButton:hover {
+    background-color: #e63a50;
+}
+
+/* Header */
+h1 {
+    text-align: center;
+    color: #6a11cb;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+/* Dropdowns Section */
+.dropdown-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.dropdown {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown label {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.dropdown select {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    background-color: #f9f9f9;
+}
+
+/* Feedback Questions */
+h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: #444;
+}
+
+/* Individual Question Styling */
+.question {
+    background: rgba(240, 240, 240, 0.8);
+    border-radius: 8px;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+}
+
+.question label {
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    color: black !important;
+    margin-bottom: 5px;
+}
+
+/* Radio Button Group Styling */
+.option-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.option-container input {
+    margin-right: 5px;
+}
+
+/* Text Area (Additional Comments) */
+textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    resize: vertical;
+    margin-top: 5px;
+}
+
+/* Submit Button */
+.submit-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: white;
+    padding: 15px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+    margin-top: 20px;
+}
+
+.submit-btn:hover {
+    background: linear-gradient(135deg, #5a0db1, #1e5bbf);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .dropdown-container {
+        flex-direction: column;
+    }
+
+    .option-container {
+        flex-direction: column;
+    }
+
+    .submit-btn {
+        font-size: 16px;
+    }
+}
