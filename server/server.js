@@ -14,7 +14,6 @@ app.use(express.static(path.join(__dirname, '../client')));
 
 // MongoDB Connection
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/feedbackDB';
-
 mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -51,13 +50,14 @@ app.post('/register', async (req, res) => {
     const { username, password } = req.body;
     try {
         const existingUser = await User.findOne({ username });
-        if (existingUser) return res.status(400).json({ message: 'Username exists' });
-
+        if (existingUser) {
+            return res.status(400).json({ message: 'Username already exists' });
+        }
         const newUser = new User({ username, password });
         await newUser.save();
         res.json({ message: 'User registered successfully!' });
     } catch (err) {
-        res.status(500).json({ message: 'Registration error' });
+        res.status(500).json({ message: 'Error registering user' });
     }
 });
 
@@ -65,27 +65,34 @@ app.post('/login', async (req, res) => {
     const { username, password } = req.body;
     try {
         const user = await User.findOne({ username, password });
-        user ? res.json({ message: 'Login successful!' })
-             : res.status(401).json({ message: 'Invalid credentials' });
+        if (user) {
+            res.json({ message: 'Login successful!' });
+        } else {
+            res.status(401).json({ message: 'Invalid username or password' });
+        }
     } catch (err) {
-        res.status(500).json({ message: 'Login error' });
+        res.status(500).json({ message: 'Error logging in' });
     }
 });
 
 app.post('/submit-feedback', async (req, res) => {
     try {
-        await new Feedback(req.body).save();
-        res.json({ message: 'Feedback submitted!' });
+        const feedback = new Feedback(req.body);
+        await feedback.save();
+        res.json({ message: 'Feedback submitted successfully!' });
     } catch (err) {
-        res.status(500).json({ message: 'Feedback error' });
+        res.status(500).json({ message: 'Error saving feedback' });
     }
 });
 
+// Admin Routes
 app.post('/admin/login', (req, res) => {
     const { username, password } = req.body;
-    (username === 'admin' && password === 'admin')
-        ? res.json({ success: true })
-        : res.status(401).json({ success: false });
+    if (username === 'admin' && password === 'admin') {
+        res.json({ success: true });
+    } else {
+        res.status(401).json({ success: false });
+    }
 });
 
 app.get('/api/feedback', async (req, res) => {
@@ -93,18 +100,19 @@ app.get('/api/feedback', async (req, res) => {
         const feedback = await Feedback.find().sort({ createdAt: -1 });
         res.json(feedback);
     } catch (err) {
-        res.status(500).json({ message: 'Error fetching feedback' });
+        res.status(500).json({ message: err.message });
     }
 });
 
 // Client Routes
-app.get(['/', '/admin/dashboard'], (req, res) => {
+app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
-// Handle all other routes
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/index.html'));
+app.get('/admin/dashboard', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/adminDashboard.html'));
 });
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
