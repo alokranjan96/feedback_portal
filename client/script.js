@@ -32,7 +32,7 @@ document.getElementById('feedbackForm').addEventListener('submit', function(even
         comments
     };
 
-    fetch('http://localhost:3000/submit-feedback', {
+    fetch('/submit-feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(feedbackData)
