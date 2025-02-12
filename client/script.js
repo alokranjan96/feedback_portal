@@ -40,7 +40,7 @@ document.getElementById('feedbackForm').addEventListener('submit', function(even
     .then(response => response.json())
     .then(data => {
         if (data.message) {
-            window.location.href = "thankyou.html"; // Redirect to Thank You page
+            window.location.href = "thankYou.html"; // Redirect to Thank You page
         }
     })
     .catch(error => {
