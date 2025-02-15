@@ -41,31 +41,64 @@
         .logout-btn:hover {
             background: #cc0000;
         }
-        table {
+        .feedback-tabs {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .tab-button {
+            padding: 10px 20px;
+            margin: 0 5px;
+            background: #6a11cb;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .tab-button.active {
+            background: #4a00a1;
+        }
+        .feedback-table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
             background: white;
+            display: none;
+            overflow-x: auto;
+        }
+        .feedback-table.active {
+            display: table;
         }
         th, td {
-            padding: 12px;
+            padding: 12px 15px;
             text-align: center;
             border-bottom: 1px solid #ddd;
+            word-wrap: break-word;
             font-size: 14px;
         }
         th {
             background-color: #6a11cb;
             color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1;
         }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
+        #teacherTable td:nth-child(10) {
+            text-align: left;
+            min-width: 200px;
+            max-width: 300px;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
         }
         @media (max-width: 768px) {
-            table {
-                font-size: 12px;
-            }
             th, td {
-                padding: 8px;
+                padding: 10px 8px;
+                font-size: 13px;
+            }
+            #teacherTable td:nth-child(10) {
+                min-width: 150px;
+                max-width: 200px;
             }
         }
     </style>
@@ -74,29 +107,67 @@
 <div class="container">
     <h1>Feedback Responses</h1>
     <button class="logout-btn" onclick="logout()">Logout</button>
-    <table>
+
+    <div class="feedback-tabs">
+        <button class="tab-button active" onclick="showFeedback('teacher')">Teacher Feedback</button>
+        <button class="tab-button" onclick="showFeedback('student')">Student Feedback</button>
+    </div>
+
+    <!-- Teacher Feedback Table -->
+    <table class="feedback-table active" id="teacherTable">
+        <colgroup>
+            <col style="width: 12%">
+            <col style="width: 14%">
+            <col style="width: 8%">
+            <col style="width: 8%">
+            <col style="width: 8%">
+            <col style="width: 8%">
+            <col style="width: 9%">
+            <col style="width: 9%">
+            <col style="width: 8%">
+            <col style="width: 10%">
+            <col style="width: 10%">
+        </colgroup>
         <thead>
         <tr>
             <th>Teacher</th>
             <th>Subject</th>
-            <th>Teaching Skills</th>
-            <th>Approachability</th>
-            <th>Explanation</th>
-            <th>Engagement</th>
-            <th>Feedback Quality</th>
-            <th>Time Management</th>
-            <th>Participation</th>
+            <th>Teaching</th>
+            <th>Approach</th>
+            <th>Explain</th>
+            <th>Engage</th>
+            <th>Feedback</th>
+            <th>Time Mgmt</th>
+            <th>Participate</th>
             <th>Comments</th>
             <th>Date</th>
         </tr>
         </thead>
-        <tbody id="feedbackList">
-        <!-- Data will be populated here -->
-        </tbody>
+        <tbody id="teacherFeedback"></tbody>
+    </table>
+
+    <!-- Student Feedback Table -->
+    <table class="feedback-table" id="studentTable">
+        <thead>
+        <tr>
+            <th>Student Name</th>
+            <th>Roll No.</th>
+            <th>Attentive</th>
+            <th>Assignments</th>
+            <th>Participate</th>
+            <th>Understand</th>
+            <th>Interest</th>
+            <th>Discipline</th>
+            <th>Comments</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody id="studentFeedback"></tbody>
     </table>
 </div>
 
 <script>
+    // JavaScript remains unchanged from previous version
     async function fetchFeedback() {
         try {
             const token = localStorage.getItem('adminToken');
@@ -115,26 +186,19 @@
             if (!response.ok) throw new Error('Failed to fetch');
 
             const feedback = await response.json();
-            const tbody = document.getElementById('feedbackList');
-            tbody.innerHTML = '';
+            const teacherTbody = document.getElementById('teacherFeedback');
+            const studentTbody = document.getElementById('studentFeedback');
+
+            teacherTbody.innerHTML = '';
+            studentTbody.innerHTML = '';
 
             feedback.forEach(item => {
-                const row = `
-                    <tr>
-                        <td>${item.teacherName}</td>
-                        <td>${item.subject}</td>
-                        <td>${item.teachingSkills}</td>
-                        <td>${item.approachability}</td>
-                        <td>${item.explanation}</td>
-                        <td>${item.engagement}</td>
-                        <td>${item.feedbackQuality}</td>
-                        <td>${item.timeManagement}</td>
-                        <td>${item.participation}</td>
-                        <td>${item.comments || 'N/A'}</td>
-                        <td>${new Date(item.createdAt).toLocaleDateString()}</td>
-                    </tr>
-                `;
-                tbody.innerHTML += row;
+                const row = createTableRow(item);
+                if (item.feedbackType === 'teacher') {
+                    teacherTbody.innerHTML += row;
+                } else {
+                    studentTbody.innerHTML += row;
+                }
             });
         } catch (error) {
             console.error('Error:', error);
@@ -142,9 +206,53 @@
         }
     }
 
+    function createTableRow(item) {
+        if (item.feedbackType === 'teacher') {
+            return `
+                <tr>
+                    <td>${item.teacherName || 'N/A'}</td>
+                    <td>${item.subject || 'N/A'}</td>
+                    <td>${item.teachingSkills || 'N/A'}</td>
+                    <td>${item.approachability || 'N/A'}</td>
+                    <td>${item.explanation || 'N/A'}</td>
+                    <td>${item.engagement || 'N/A'}</td>
+                    <td>${item.feedbackQuality || 'N/A'}</td>
+                    <td>${item.timeManagement || 'N/A'}</td>
+                    <td>${item.participation || 'N/A'}</td>
+                    <td>${item.comments || 'N/A'}</td>
+                    <td>${new Date(item.createdAt).toLocaleDateString()}</td>
+                </tr>
+            `;
+        }
+
+        return `
+            <tr>
+                <td>${item.studentName || 'N/A'}</td>
+                <td>${item.rollNumber || 'N/A'}</td>
+                <td>${item.attentiveness || 'N/A'}</td>
+                <td>${item.assignments || 'N/A'}</td>
+                <td>${item.participation || 'N/A'}</td>
+                <td>${item.understanding || 'N/A'}</td>
+                <td>${item.interest || 'N/A'}</td>
+                <td>${item.discipline || 'N/A'}</td>
+                <td>${item.comments || 'N/A'}</td>
+                <td>${new Date(item.createdAt).toLocaleDateString()}</td>
+            </tr>
+        `;
+    }
+
+    function showFeedback(type) {
+        document.querySelectorAll('.tab-button').forEach(btn => {
+            btn.classList.toggle('active', btn.textContent.includes(type.charAt(0).toUpperCase() + type.slice(1)));
+        });
+
+        document.getElementById('teacherTable').classList.toggle('active', type === 'teacher');
+        document.getElementById('studentTable').classList.toggle('active', type === 'student');
+    }
+
     function logout() {
         localStorage.removeItem('adminToken');
-        window.location.href = '/index.html';
+        window.location.href = '/';
     }
 
     document.addEventListener('DOMContentLoaded', fetchFeedback);
