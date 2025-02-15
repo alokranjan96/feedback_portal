@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Feedback Form</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .input-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+        .input-container label {
+            font-weight: bold;
+            color: black;
+            margin-bottom: 5px;
+        }
+        .input-container input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <button id="logoutButton">Logout</button>
+    <h1>Student Feedback Form</h1>
+    <form id="feedbackForm">
+        <div class="input-row">
+            <div class="input-container">
+                <label for="studentName">Student's Name:</label>
+                <input type="text" id="studentName" required>
+            </div>
+
+            <div class="input-container">
+                <label for="rollNumber">Roll Number:</label>
+                <input type="text" id="rollNumber" required>
+            </div>
+        </div>
+
+        <h3>Feedback Questions:</h3>
+
+        <div class="question">
+            <label>1. How attentive is the student in class?</label>
+            <div class="option-container">
+                <label><input type="radio" name="attentiveness" value="Very Attentive" required> Very Attentive</label>
+                <label><input type="radio" name="attentiveness" value="Attentive"> Attentive</label>
+                <label><input type="radio" name="attentiveness" value="Sometimes Attentive"> Sometimes Attentive</label>
+                <label><input type="radio" name="attentiveness" value="Not Attentive"> Not Attentive</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <label>2. How well does the student complete assignments?</label>
+            <div class="option-container">
+                <label><input type="radio" name="assignments" value="Always on time" required> Always on time</label>
+                <label><input type="radio" name="assignments" value="Mostly on time"> Mostly on time</label>
+                <label><input type="radio" name="assignments" value="Occasionally late"> Occasionally late</label>
+                <label><input type="radio" name="assignments" value="Rarely on time"> Rarely on time</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <label>3. How actively does the student participate in class discussions?</label>
+            <div class="option-container">
+                <label><input type="radio" name="participation" value="Very Active" required> Very Active</label>
+                <label><input type="radio" name="participation" value="Somewhat Active"> Somewhat Active</label>
+                <label><input type="radio" name="participation" value="Rarely Active"> Rarely Active</label>
+                <label><input type="radio" name="participation" value="Not Active"> Not Active</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <label>4. How well does the student understand the subject?</label>
+            <div class="option-container">
+                <label><input type="radio" name="understanding" value="Excellent" required> Excellent</label>
+                <label><input type="radio" name="understanding" value="Good"> Good</label>
+                <label><input type="radio" name="understanding" value="Average"> Average</label>
+                <label><input type="radio" name="understanding" value="Poor"> Poor</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <label>5. Does the student show interest in learning?</label>
+            <div class="option-container">
+                <label><input type="radio" name="interest" value="Very Interested" required> Very Interested</label>
+                <label><input type="radio" name="interest" value="Somewhat Interested"> Somewhat Interested</label>
+                <label><input type="radio" name="interest" value="Neutral"> Neutral</label>
+                <label><input type="radio" name="interest" value="Not Interested"> Not Interested</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <label>6. How disciplined is the student in class?</label>
+            <div class="option-container">
+                <label><input type="radio" name="discipline" value="Very Disciplined" required> Very Disciplined</label>
+                <label><input type="radio" name="discipline" value="Disciplined"> Disciplined</label>
+                <label><input type="radio" name="discipline" value="Sometimes Disciplined"> Sometimes Disciplined</label>
+                <label><input type="radio" name="discipline" value="Not Disciplined"> Not Disciplined</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <label>7. Any additional comments or suggestions?</label>
+            <textarea id="comments" rows="4" placeholder="Your comments here..."></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">Submit Feedback</button>
+    </form>
+    <div id="responseMessage"></div>
+</div>
+
+<script src="script.js"></script>
+<script>
+    document.getElementById('logoutButton').addEventListener('click', function() {
+        localStorage.removeItem('loggedIn');
+        window.location.href = "/";
+    });
+</script>
+</body>
+</html>
