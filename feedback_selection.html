@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Feedback Type</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .selection-container {
+            text-align: center;
+            padding: 40px;
+        }
+        .feedback-type {
+            margin: 20px;
+            padding: 30px;
+            border: 2px solid #6a11cb;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .feedback-type:hover {
+            background-color: #f0e6ff;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <button id="logoutButton" style="float: right; margin: 20px;">Logout</button>
+    <div class="selection-container">
+        <h1>Select Feedback Type</h1>
+        <div class="feedback-type" onclick="location.href='teacher_feedback.html'">
+            <h2>Teacher Feedback</h2>
+            <p>Provide feedback about your teachers</p>
+        </div>
+        <div class="feedback-type" onclick="location.href='student_feedback.html'">
+            <h2>Student Feedback</h2>
+            <p>Provide feedback about students</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('logoutButton').addEventListener('click', function() {
+        localStorage.removeItem('loggedIn');
+        window.location.href = "/";
+    });
+</script>
+</body>
+</html>

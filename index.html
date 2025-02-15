@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Feedback Hub - Teacher Feedback Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Roboto', sans-serif;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 1000px;
+            margin: 20px 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .welcome-content {
+            flex: 1;
+            padding: 30px;
+            background: rgba(106, 17, 203, 0.1);
+            backdrop-filter: blur(5px);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .login-form {
+            flex: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            animation: formEntrance 0.8s ease-out 0.3s both;
+        }
+
+        /* Updated login header styles */
+        .login-form-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .logo-container {
+            margin-bottom: 10px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            animation: logoEntrance 0.8s ease-out;
+        }
+
+        .logo-svg {
+            width: 55%;
+            height: 55%;
+        }
+
+        @keyframes formEntrance {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes logoEntrance {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .welcome-content h1 {
+            color: #6a11cb;
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #2575fc;
+            padding-bottom: 15px;
+        }
+
+        .welcome-content p {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .features-list li {
+            margin-bottom: 12px;
+            padding: 8px 8px 8px 28px;
+            position: relative;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            cursor: default;
+            border-radius: 6px;
+        }
+
+        .features-list li:hover {
+            background: rgba(106, 17, 203, 0.05);
+            transform: translateX(5px);
+        }
+
+        .features-list li i {
+            position: absolute;
+            left: 0;
+            top: 3px;
+            color: #2575fc;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .features-list li:hover i {
+            color: #6a11cb;
+            transform: scale(1.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #4a90e2;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 2px solid #6a11cb;
+            background-color: #f1f8ff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            padding: 12px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+        }
+
+        #registerPrompt, #adminPrompt {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        #formError {
+            color: #dc3545;
+            font-size: 0.85rem;
+            text-align: center;
+            margin-top: 12px;
+            padding: 8px;
+            background: #fff5f5;
+            border-radius: 4px;
+            display: none;
+        }
+
+        #formError.visible {
+            display: block;
+        }
+
+        [aria-invalid="true"] {
+            border-color: #dc3545 !important;
+            background: #fff5f5;
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+
+            .container {
+                flex-direction: column;
+                margin: 10px 0;
+            }
+
+            .welcome-content,
+            .login-form {
+                padding: 20px;
+            }
+
+            .welcome-content h1 {
+                font-size: 1.8rem;
+                margin-bottom: 20px;
+            }
+
+            h2 {
+                font-size: 1.6rem;
+                margin-bottom: 20px;
+            }
+
+            .features-list li {
+                padding: 6px 6px 6px 26px;
+                margin-bottom: 10px;
+                font-size: 0.9rem;
+            }
+
+            .logo {
+                width: 50px;
+                height: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="welcome-content">
+        <h1>Transformative Feedback for Education</h1>
+
+        <p>Welcome to Feedback Hub, where teachers and students collaborate to create meaningful learning experiences through constructive feedback.</p>
+
+        <ul class="features-list">
+            <li><i class="fas fa-comment-dots"></i> Real-time feedback exchange</li>
+            <li><i class="fas fa-chart-line"></i> Progress tracking and analytics</li>
+            <li><i class="fas fa-handshake"></i> Collaborative learning environment</li>
+            <li><i class="fas fa-shield-alt"></i> Secure and private communication</li>
+        </ul>
+
+        <p>Our platform empowers educators and learners to engage in continuous improvement through structured, actionable feedback mechanisms.</p>
+    </div>
+
+    <div class="login-form">
+        <div class="login-form-header">
+            <div class="logo-container">
+                <div class="logo">
+                    <svg class="logo-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 14V18" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M16 12L18 14" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M8 12L6 14" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M12 6C13.6569 6 15 7.34315 15 9C15 10.6569 13.6569 12 12 12C10.3431 12 9 10.6569 9 9C9 7.34315 10.3431 6 12 6Z" fill="white"/>
+                        <path d="M17 3H7C4.79086 3 3 4.79086 3 7V17C3 19.2091 4.79086 21 7 21H17C19.2091 21 21 19.2091 21 17V7C21 4.79086 19.2091 3 17 3Z" stroke="white" stroke-width="2"/>
+                    </svg>
+                </div>
+            </div>
+            <h2>Welcome to Feedback Hub</h2>
+        </div>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" required>
+            </div>
+            <button type="submit" class="submit-btn">Login</button>
+            <div id="formError" class="error-message" aria-live="assertive"></div>
+        </form>
+        <div id="adminPrompt">
+            <p><span style="color: #800020; font-weight: 600;">Admin? </span>
+                <a href="adminLogin.html" style="color: #000000; text-decoration: underline;">Login here</a>
+            </p>
+        </div>
+        <div id="registerPrompt">
+            <p><span style="color: #800020; font-weight: 600;">New to Feedback Hub? </span>
+                <a href="#" id="registerLink" style="color: #000000; text-decoration: underline;">Create account</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<script src="login.js"></script>
+<script>
+    document.getElementById('registerLink').addEventListener('click', function(event) {
+        event.preventDefault();
+        window.location.href = "register.html";
+    });
+</script>
+</body>
+</html>
