@@ -11,7 +11,7 @@ const ADMIN_JWT_SECRET = process.env.ADMIN_JWT_SECRET || 'adminsecret123';
 
 // Middleware
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' ? 'https://your-domain.com' : 'http://localhost:3000'
+  origin: process.env.NODE_ENV || 'http://localhost:3000'
 }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../client')));
